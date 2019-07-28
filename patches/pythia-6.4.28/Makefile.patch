@@ -1,0 +1,12 @@
+6a7
+> CC = gcc
+10a12
+> FFLAGS = -fPIC
+19c21
+< lib: libpythia.a
+---
+> lib: libpythia.a libpythia.so
+24a27,29
+> libpythia.so: ${OBJS}
+> 	$(CC) -shared $+ -o $@
+> 

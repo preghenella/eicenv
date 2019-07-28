@@ -1,0 +1,10 @@
+--- TimeSmearing.cc.original	2018-11-24 20:55:24.000000000 +0530
++++ TimeSmearing.cc	2018-11-24 20:56:07.000000000 +0530
+@@ -107,6 +107,7 @@
+     // apply smearing formula
+     tf_smeared = gRandom->Gaus(tf, fTimeResolution);
+     ti = ti + tf_smeared - tf;
++    tf = tf_smeared;
+ 
+     mother = candidate;
+     candidate = static_cast<Candidate*>(candidate->Clone());

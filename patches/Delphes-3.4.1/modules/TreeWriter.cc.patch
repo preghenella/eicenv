@@ -1,0 +1,10 @@
+--- TreeWriter.cc.original	2018-11-23 09:59:41.000000000 +0530
++++ TreeWriter.cc	2018-11-23 09:56:09.000000000 +0530
+@@ -375,6 +375,7 @@
+     eta = (cosTheta == 1.0 ? signz*999.9 : momentum.Eta());
+     rapidity = (cosTheta == 1.0 ? signz*999.9 : momentum.Rapidity());
+ 
++    entry->P = p;
+     entry->PT  = pt;
+     entry->Eta = eta;
+     entry->Phi = phi;

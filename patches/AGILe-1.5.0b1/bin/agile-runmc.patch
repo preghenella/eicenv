@@ -1,0 +1,3 @@
+358a359,360
+>     elif name.lower() in ["gamma/e-"]:
+>         pid = AGILe.PHOTOELECTRON
