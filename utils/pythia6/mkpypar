@@ -2,8 +2,8 @@
 
 ###
 electronP=15.9
-targetP=250.
-target="proton"
+hadronP=250.
+hadron="proton"
 process="all"
 photon="all"
 Xmin=0.
@@ -24,8 +24,8 @@ while [ ! -z "$1" ]; do
 	echo "usage: ./mkpypar.sh"
 	echo "options:"
 	echo "          --electronP  [electron momentum] ($electronP)"
-	echo "          --targetP    [target momentum] ($targetP)"
-	echo "          --target     [target] ($target)"
+	echo "          --hadronP    [hadron momentum] ($hadronP)"
+	echo "          --hadron     [hadron] ($hadron)"
 	echo "          --process    [process] ($process)"
 	echo "          --photon     [photon] ($photon)"
 	echo "          --disQ2      [> 1]"
@@ -47,11 +47,11 @@ while [ ! -z "$1" ]; do
     elif [ "$option" = "--electronP" ]; then
 	electronP="$1"
         shift
-    elif [ "$option" = "--targetP" ]; then
-	targetP="$1"
+    elif [ "$option" = "--hadronP" ]; then
+	hadronP="$1"
         shift
-    elif [ "$option" = "--target" ]; then
-	target="$1"
+    elif [ "$option" = "--hadron" ]; then
+	hadron="$1"
         shift
     elif [ "$option" = "--process" ]; then
 	process="$1"
@@ -111,10 +111,10 @@ generate_pythia_params() {
     echo "###"
     echo "### BEAMS"
     echo "###"
-    echo "RG:Beam1 gamma/e-"
-    echo "RG:Beam2 $target"
-    echo "RG:Mom1  $electronP"
-    echo "RG:Mom2  $targetP"
+    echo "RG:Beam1 $hadron"
+    echo "RG:Beam2 gamma/e-"
+    echo "RG:Mom1  $hadronP"
+    echo "RG:Mom2  $electronP"
 #    echo "PMAS(4,1)=1.27    # charm mass"
 ###
 ### PROCESS
