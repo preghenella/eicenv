@@ -13,9 +13,10 @@ RUN mkdir -p $EIC_ROOT
 
 COPY bin     $EIC_ROOT/bin
 COPY patches $EIC_ROOT/patches
-COPY utils   $EIC_ROOT/utils
 
 RUN /bin/bash -c "source $EIC_ROOT/bin/eicenv && $EIC_ROOT/bin/eicbuild"
+
+COPY utils   $EIC_ROOT/utils
 
 ARG username=eicuser
 RUN userdel -r builder && useradd --create-home --home-dir /home/${username} ${username}
