@@ -1,0 +1,12 @@
+189c189
+<       candidate->L = 0.0;
+---
+>       candidate->L += 0.0;
+233c233
+<       candidate->L = l*1.0E3;
+---
+>       candidate->L += l*1.0E3;
+411c411
+<         candidate->L = l*1.0E3;
+---
+>         candidate->L += l*1.0E3;
