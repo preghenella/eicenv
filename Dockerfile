@@ -8,21 +8,22 @@ RUN apt-get update && \
     libboost-all-dev \
     swig
 
-ARG username=eic
-RUN useradd --create-home --home-dir /home/${username} ${username}
-ENV HOME /home/${username}
-
-USER ${username}
-WORKDIR /home/${username}
-
-ENV EIC_ROOT $HOME/EIC
+ENV EIC_ROOT /EIC
 RUN mkdir -p $EIC_ROOT
 
 COPY bin     $EIC_ROOT/bin
 COPY patches $EIC_ROOT/patches
+COPY utils   $EIC_ROOT/utils
 
 RUN /bin/bash -c "source $EIC_ROOT/bin/eicenv && $EIC_ROOT/bin/eicbuild"
 
-COPY utils $EIC_ROOT/utils
+ARG username=eicuser
+RUN userdel -r builder && useradd --create-home --home-dir /home/${username} ${username}
+ENV HOME /home/${username}
 
-CMD ["/home/eic/EIC/bin/eicenv"]
+RUN echo "root:eicroot" | chpasswd
+
+USER ${username}
+WORKDIR /home/${username}
+
+CMD ["/EIC/bin/eicenv"]
