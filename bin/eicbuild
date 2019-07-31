@@ -276,8 +276,9 @@ build_delphes() {
     SOURCE=$EIC_SOURCE/Delphes-3.4.1
     INSTALL=$EIC_INSTALL/Delphes-3.4.1
     echo "--- Patching Delphes ---" && \
-    patch -N $SOURCE/modules/TreeWriter.cc patches/Delphes-3.4.1/modules/TreeWriter.cc.patch && \
-    patch -N $SOURCE/modules/TimeSmearing.cc patches/Delphes-3.4.1/modules/TimeSmearing.cc.patch && \
+    patch -N $SOURCE/modules/TreeWriter.cc $EIC_ROOT/patches/Delphes-3.4.1/modules/TreeWriter.cc.patch && \
+    patch -N $SOURCE/modules/TimeSmearing.cc $EIC_ROOT/patches/Delphes-3.4.1/modules/TimeSmearing.cc.patch && \
+    patch -N $SOURCE/modules/ParticlePropagator.cc $EIC_ROOT/patches/Delphes-3.4.1/modules/ParticlePropagator.cc.patch && \
     mkdir -p $INSTALL
     cd $SOURCE
     mkdir obj
