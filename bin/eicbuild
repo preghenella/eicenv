@@ -267,19 +267,15 @@ build_root() {
 download_delphes() {
     mkdir -p $EIC_SOURCE
     echo "--- Downloading Delphes ---" && \
-	curl -k -L -O http://cp3.irmp.ucl.ac.be/downloads/Delphes-3.4.1.tar.gz && \
+	curl -k -L -O https://github.com/preghenella/delphes/archive/3.4.2pre17-r+dev.tar.gz && \
 	echo "--- Extracting Delphes ---" && \
-	tar zxf Delphes-3.4.1.tar.gz -C $EIC_SOURCE && \
-	rm Delphes-3.4.1.tar.gz
+	tar zxf 3.4.2pre17-r+dev.tar.gz -C $EIC_SOURCE && \
+	rm 3.4.2pre17-r+dev.tar.gz
 }
 build_delphes() {
-    SOURCE=$EIC_SOURCE/Delphes-3.4.1
-    INSTALL=$EIC_INSTALL/Delphes-3.4.1
+    SOURCE=$EIC_SOURCE/delphes-3.4.2pre17-r-dev
+    INSTALL=$EIC_INSTALL/delphes-3.4.2pre17-r-dev
     echo "--- Patching Delphes ---" && \
-    patch -N $SOURCE/modules/TreeWriter.cc $EIC_ROOT/patches/Delphes-3.4.1/modules/TreeWriter.cc.patch.000 && \
-    patch -N $SOURCE/modules/TimeSmearing.cc $EIC_ROOT/patches/Delphes-3.4.1/modules/TimeSmearing.cc.patch.000 && \
-    patch -N $SOURCE/modules/ParticlePropagator.cc $EIC_ROOT/patches/Delphes-3.4.1/modules/ParticlePropagator.cc.patch.000 && \
-    patch -N $SOURCE/modules/ParticlePropagator.cc $EIC_ROOT/patches/Delphes-3.4.1/modules/ParticlePropagator.cc.patch.001 && \
     mkdir -p $INSTALL
     cd $SOURCE
     mkdir obj
