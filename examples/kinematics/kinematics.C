@@ -4,11 +4,12 @@ R__LOAD_LIBRARY(libDelphes);
 #include "external/ExRootAnalysis/ExRootTreeReader.h"
 #endif
 
-void kinematics(const Char_t *fname = "delphes.root")
+void kinematics(const Char_t *finname = "delphes.root", const Char_t *foutname = "kinematics.root",
+		Double_t electronP = -10., Double_t protonP = 100.)
 {
 
   /** open file and connect to tree **/
-  auto fin = TFile::Open(fname);
+  auto fin = TFile::Open(finname);
   auto tin = (TTree *)fin->Get("Delphes");
   auto nevents = tin->GetEntries();
   TClonesArray *events = new TClonesArray("HepMCEvent");
@@ -17,12 +18,12 @@ void kinematics(const Char_t *fname = "delphes.root")
   tin->SetBranchAddress("Particle", &particles);
 
   /** histograms **/
-  auto hQ2x = new TH2F("hQ2x", ";log_{10} x_{B}; log_{10} Q^{2} (GeV^{2})", 50, -5., 0., 50, -1., 4.);
+  auto hQ2x = new TH2F("hQ2x", ";log_{10} x_{B}; log_{10} Q^{2} (GeV^{2});#sigma (pb)", 50, -5., 0., 50, -1., 4.);
   
   /** vectors for kinematics **/
   TLorentzVector k, p, ko, q;
-  k.SetXYZM(0., 0., -10., 0.00051099891);
-  p.SetXYZM(0., 0., 100., 0.938270);
+  k.SetXYZM(0., 0., electronP, 0.00051099891);
+  p.SetXYZM(0., 0., protonP, 0.938270);
   
   /** loop over events **/
   for (Int_t iev = 0; iev < nevents; ++iev) {
@@ -51,8 +52,15 @@ void kinematics(const Char_t *fname = "delphes.root")
     
   } /** end of loop over events **/
 
+  /** get latest cross-section **/
+  auto event = (HepMCEvent *)events->At(0);
+  auto crossSection = event->CrossSection; // [pb]
+
+  /** normalise **/
+  hQ2x->Scale(crossSection / nevents);
+
   /** write output and close **/
-  auto fout = TFile::Open("kinematics.root", "RECREATE");
+  auto fout = TFile::Open(foutname, "RECREATE");
   hQ2x->Write();
   fout->Close();
   fin->Close();
