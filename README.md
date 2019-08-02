@@ -40,28 +40,28 @@ If you need some more help or a curious of what other parameters can be used wit
 [eicenv] agile-runmc --help
 ```
 
-### utils/pythia6/mkpypar
+### utils/pythia6/mkpypar.sh
 
-If you are not familiar with the settings of Pythia6 (parameters), you can either study the [Pythia6 manual](https://arxiv.org/abs/hep-ph/0603175) or use the simple **utils/pythia6/mkpypar** program.
+If you are not familiar with the settings of Pythia6 (parameters), you can either study the [Pythia6 manual](https://arxiv.org/abs/hep-ph/0603175) or use the simple **utils/pythia6/mkpypar.sh** program.
 
 This program automatically generates a `pythia.params` file with some default settings  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar
+[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh
 ```
 
 The main parameters you might want to play with are the electron and target beam energies (GeV), that can be modified with  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar --electronP 10. --targetP 100.
+[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh --electronP 10. --targetP 100.
 ```
 
 There are other parameters that you can play with, like for instance setting the minimum and maximum photon virtuality (Q2)  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar --electronP 10. --targetP 100. --Q2min 10. --Q2max 12.
+[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh --electronP 10. --targetP 100. --Q2min 10. --Q2max 12.
 ```
 
 If you need some more help or a curious of what other parameters can be used with mkpypar, do no hesitate to run  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar --help
+[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh --help
 ```
 
 Notice on the other hand that not everything is likely to work as expected, so use it with common sense and cross-check that the physics is simulated as expected by Pythia6 with some short runs. Also, you might want to refer to the Pythia6 manual for more detailed information.
@@ -83,7 +83,7 @@ This card just translates the HepMC file into a ROOT file, taking all particles 
 
 I assume you have already generated a HepMC file with some Pythia6 configuration as done in the following  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar --electronP 10. --targetP 100. --Q2min 10. --Q2max 12. --output pythia.params
+[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh --electronP 10. --targetP 100. --Q2min 10. --Q2max 12. --output pythia.params
 [eicenv] agile-runmc Pythia6:HEAD -n 1000 -P pythia.params -o pythia.hepmc
 ```
 
