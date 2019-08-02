@@ -132,7 +132,9 @@ build_pythia6() {
     SOURCE=$EIC_SOURCE/pythia-6.4.28
     INSTALL=$EIC_INSTALL/pythia-6.4.28
     echo "--- Patching Pythia6 ---" && \
-	patch -N $SOURCE/Makefile $EIC_ROOT/patches/pythia-6.4.28/Makefile.patch
+	patch -N $SOURCE/Makefile $EIC_ROOT/patches/pythia-6.4.28/Makefile.patch.000 && \
+	patch -N $SOURCE/Makefile $EIC_ROOT/patches/pythia-6.4.28/Makefile.patch.001 && \
+	rm -rf $SOURCE/pdfset.f $SOURCE/struct*.f
     mkdir -p $INSTALL/lib
     cd $SOURCE
     echo "--- Building Pythia6 ---" && \

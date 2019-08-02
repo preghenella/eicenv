@@ -1,3 +1,5 @@
+#! /usr/bin/env bash
+
 ### usage: ./mkpypar.sh --help
 
 ###
@@ -6,6 +8,7 @@ hadronP=250.
 hadron="proton"
 process="all"
 photon="all"
+pdf="cteq6l1"
 Xmin=0.
 Xmax=1.
 Q2min=1.
@@ -28,6 +31,7 @@ while [ ! -z "$1" ]; do
 	echo "          --hadron     [hadron] ($hadron)"
 	echo "          --process    [process] ($process)"
 	echo "          --photon     [photon] ($photon)"
+	echo "          --pdf        [pdf] ($pdf)"
 	echo "          --disQ2      [> 1]"
 	echo "          --lowQ2      [< 1]"
 	echo "          --midQ2      [8 < Q2 < 12]"
@@ -58,6 +62,9 @@ while [ ! -z "$1" ]; do
         shift
     elif [ "$option" = "--photon" ]; then
 	photon="$1"
+        shift
+    elif [ "$option" = "--pdf" ]; then
+	pdf="$1"
         shift
     elif [ "$option" = "--disQ2" ]; then
 	Q2min=1.
@@ -147,6 +154,22 @@ case $photon in
 	    echo -e "MSTP(14)=$photon" "\t ### a mixture of structure of the incoming photon (D = 30)";;
 esac
 ###
+### PDF
+###
+echo "###"
+echo "### PDF"
+echo "###"
+case $pdf in
+    "internal")
+    	echo -e "MSTP(52)=1" "\t ### use Pythia internal PDF";;
+    "cteq6l1")
+	echo -e "MSTP(51)=10042" "\t ### cteq6l1"
+    	echo -e "MSTP(52)=2";;
+    *)
+	echo -e "MSTP(51)=$pdf" "\t ### "
+    	echo -e "MSTP(52)=2";;
+esac
+###
 ### DEFAULTS
 ###
     echo "###"
@@ -156,8 +179,6 @@ esac
     echo "MSTP(19)=1 #! Hermes MSTP(19=)1 different Q2 suppression, default = 4"
     echo "MSTP(20)=0 #! Hermes MSTP(20)=0 , default MSTP(20)=3"
     echo "MSTP(38)=4"
-    echo "### MSTP(51)=10150 #! if pdflib is linked than non pythia-pdfs are available,                         like MSTP(51)=4046"
-    echo "### MSTP(52)=2   #! ---> pdflib used MSTP   52=2"
     echo "MSTP(53)=3"
     echo "MSTP(54)=1"
     echo "MSTP(55)=5"
