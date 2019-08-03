@@ -3,8 +3,8 @@
 ### usage: ./mkpypar.sh --help
 
 ###
-electronP=15.9
-hadronP=250.
+electronP=10.
+hadronP=100.
 hadron="proton"
 process="all"
 photon="all"
