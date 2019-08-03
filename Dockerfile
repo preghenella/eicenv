@@ -16,11 +16,8 @@ COPY patches $EIC_ROOT/patches
 
 RUN /bin/bash -c "source $EIC_ROOT/bin/eicenv && $EIC_ROOT/bin/eicbuild"
 
-COPY pdfs     $EIC_ROOT/pdfs
 COPY utils    $EIC_ROOT/utils
 COPY examples $EIC_ROOT/examples
-
-RUN /bin/bash -c "source $EIC_ROOT/bin/eicenv && $EIC_ROOT/pdfs/lhapdf/install cteq6l1"
 
 ARG username=eicuser
 RUN userdel -r builder && useradd --create-home --home-dir /home/${username} ${username}
