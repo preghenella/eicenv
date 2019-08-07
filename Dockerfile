@@ -16,6 +16,8 @@ COPY patches $EIC_ROOT/patches
 
 RUN /bin/bash -c "source $EIC_ROOT/bin/eicenv && $EIC_ROOT/bin/eicbuild"
 
+RUN /bin/bash -c "source $EIC_ROOT/bin/eicenv && lhapdf install CT10"
+
 COPY utils    $EIC_ROOT/utils
 COPY examples $EIC_ROOT/examples
 
