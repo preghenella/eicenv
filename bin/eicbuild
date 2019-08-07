@@ -175,14 +175,14 @@ build_pythia8() {
 download_lhapdf() {
     mkdir -p $EIC_SOURCE
     echo "--- Downloading LHAPDF ---" && \
-	curl -k -L -O https://lhapdf.hepforge.org/downloads/LHAPDF-6.2.1.tar.gz
+	curl -k -L -O https://lhapdf.hepforge.org/downloads/LHAPDF-6.2.3.tar.gz
 	echo "--- Extracting LHAPDF ---" && \
-	tar -zxf LHAPDF-6.2.1.tar.gz -C $EIC_SOURCE && \
-	rm LHAPDF-6.2.1.tar.gz
+	tar -zxf LHAPDF-6.2.3.tar.gz -C $EIC_SOURCE && \
+	rm LHAPDF-6.2.3.tar.gz
 }
 build_lhapdf() {
-    SOURCE=$EIC_SOURCE/LHAPDF-6.2.1
-    INSTALL=$EIC_INSTALL/LHAPDF-6.2.1
+    SOURCE=$EIC_SOURCE/LHAPDF-6.2.3
+    INSTALL=$EIC_INSTALL/LHAPDF-6.2.3
     mkdir -p $INSTALL
     cd $SOURCE
     echo "--- Building LHAPDF ---" && \
