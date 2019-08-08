@@ -8,7 +8,8 @@ hadronP=100.
 hadron="proton"
 process="all"
 photon="all"
-pdf="internal"
+pdf="CT10"
+decay="all"
 Xmin=0.
 Xmax=1.
 Q2min=1.
@@ -32,6 +33,7 @@ while [ ! -z "$1" ]; do
 	echo "          --process    [process] ($process)"
 	echo "          --photon     [photon] ($photon)"
 	echo "          --pdf        [pdf] ($pdf)"
+	echo "          --decay      [decay] ($decay)"
 	echo "          --disQ2      [> 1]"
 	echo "          --lowQ2      [< 1]"
 	echo "          --midQ2      [8 < Q2 < 12]"
@@ -65,6 +67,9 @@ while [ ! -z "$1" ]; do
         shift
     elif [ "$option" = "--pdf" ]; then
 	pdf="$1"
+        shift
+    elif [ "$option" = "--decay" ]; then
+	decay="$1"
         shift
     elif [ "$option" = "--disQ2" ]; then
 	Q2min=1.
@@ -165,9 +170,29 @@ case $pdf in
     "cteq6l1")
 	echo -e "MSTP(51)=10042" "\t ### cteq6l1"
     	echo -e "MSTP(52)=2";;
+    "CT10")
+	echo -e "MSTP(51)=10800" "\t ### CT10"
+    	echo -e "MSTP(52)=2";;
     *)
 	echo -e "MSTP(51)=$pdf" "\t ### "
     	echo -e "MSTP(52)=2";;
+esac
+###
+### DECAYS
+###
+echo "###"
+echo "### DECAYS"
+echo "###"
+case $decay in
+    "all")
+    	echo -e "MSTJ(21)=2" "\t ### may decay within the region given by MSTJ(22) (D = 2)"
+	echo -e "MSTJ(22)=1" "\t ### a particle declared unstable is also forced to decay (D = 1)";;
+    "none")
+    	echo -e "MSTJ(21)=0" "\t ### all particle decays are inhibited (D = 2)";;
+    *)
+	echo -e "MSTJ(21)=2" "\t ### may decay within the region given by MSTJ(22) (D = 2)"
+    	echo -e "MSTJ(22)=2" "\t ### only if its average proper lifetime is smaller than PARJ(71)"
+	echo -e "PARJ(71)=$decay" "\t ### maximum average proper lifetime for particles allowed to decay (D = 10 mm)";;
 esac
 ###
 ### DEFAULTS
