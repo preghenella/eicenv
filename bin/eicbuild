@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-commands="download build hepmc lhapdf pythia6 pythia8 agile sacrifice delphes"
+commands="download build hepmc lhapdf pythia6 pythia8 rapgap agile sacrifice delphes"
 
 ### MAIN ###
 main() {
@@ -53,6 +53,16 @@ main() {
 	fi
 	if [[ $commands =~ "build" ]]; then
 	    build_pythia8
+	fi
+    fi
+    
+    # download and build RapGap
+    if [[ $commands =~ "rapgap" ]]; then
+	if [[ $commands =~ "download" ]]; then
+	    download_rapgap
+	fi
+	if [[ $commands =~ "build" ]]; then
+	    build_rapgap
 	fi
     fi
     
@@ -169,6 +179,33 @@ build_pythia8() {
     cd -
     rm -rf $EIC_INSTALL/Pythia8 
     ln -s $INSTALL $EIC_INSTALL/Pythia8 
+}
+
+### RapGap ###
+download_rapgap() {
+    mkdir -p $EIC_SOURCE
+    echo "--- Downloading RapGap ---" && \
+	curl -k -O -L https://rapgap.hepforge.org/downloads/rapgap-3.303.tar.gz && \
+	echo "--- Extracting RapGap ---" && \
+	tar -zxf rapgap-3.303.tar.gz -C $EIC_SOURCE && \
+	rm rapgap-3.303.tar.gz
+}
+build_rapgap() {
+
+    apt-get -y install texlive-latex-base texlive-latex-extra
+
+    SOURCE=$EIC_SOURCE/rapgap-3.303
+    INSTALL=$EIC_INSTALL/rapgap-3.303
+    mkdir -p $INSTALL
+    cd $SOURCE
+    echo "--- Building RapGap ---" && \
+	./configure --disable-shared --with-pythia6=$PYTHIA6_ROOT --with-hepmc=$HEPMC_ROOT --with-lhapdf=$LHAPDF_ROOT --prefix=$INSTALL && \
+	make && make install 
+    cd -
+    rm -rf $EIC_INSTALL/RapGap 
+    ln -s $INSTALL $EIC_INSTALL/RapGap 
+
+    apt-get -y remove texlive-latex-base texlive-latex-extra
 }
 
 ### LHAPDF ###
