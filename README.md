@@ -40,7 +40,7 @@ For instance
 # docker run --rm -it -v $HOME:/home/eicuser preghenella/eicenv
 ```
 will mount your home directory at the place of the `eicuser` home directory inside the Docker.  
-Like this, you will basically operate as if you where on your local disk.
+Like this, you will basically operate as if you were on your local disk.
 
 ## Pythia6 generator
 
