@@ -7,7 +7,7 @@ The core of the fast Monte Carlo simulation is provided by [Delphes](https://cp3
 
 ## Docker installation
 
-To make life and installation of all the necessary packages easy for all kind of users, a [Docker](https://www.docker.com/) image can be is available. Please, follow the necessary instructions to install Docker on your system.
+To make life and installation of all the necessary packages easy for all kind of users, a [Docker](https://www.docker.com/) image is made available. Please, follow the necessary instructions to install Docker on your system.
 
 Once you have Docker installed and running on your system, you can obtain the image with  
 ```
@@ -21,9 +21,26 @@ You can run the image with
 
 You should be presented with the following prompt  
 ```
-[eicenv] eic@ed3ad649abee ~ $
+[eicenv] eicuser@ed3ad649abee ~ $
 ```
-and ready for the following steps.
+and ready for the following steps.  
+
+The default user is `eicuser`, with home directory `/home/eicuser`.  
+Should you for any reason need to have `root` priviliges, the password is `eicroot`.  
+
+You should get familiar with the use of Docker, please read guideline and instructions elsewhere.  
+Notice that if you need to access some files located on your computer within the Docker and/or get some output from jobs running in the Docker container available on your computer disk, you need to mount a local volume in the Docker container.  
+To do that, run the image with  
+```
+# docker run --rm -it -v <localdir>:<dockerdir> preghenella/eicenv
+```
+where `<localdir>` is the local directory on your computer that you want to mount in the Docker container and `<dockerdir>` is the location in the Docker container filesystem where the volume will be mounted.  
+For instance  
+```
+# docker run --rm -it -v $HOME:/home/eicuser preghenella/eicenv
+```
+will mount your home directory at the place of the `eicuser` home directory inside the Docker.  
+Like this, you will basically operate as if you where on your local disk.
 
 ## Pythia6 generator
 
@@ -46,22 +63,22 @@ If you are not familiar with the settings of Pythia6 (parameters), you can eithe
 
 This program automatically generates a `pythia.params` file with some default settings  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh
+[eicenv] /EIC/utils/pythia6/mkpypar.sh
 ```
 
 The main parameters you might want to play with are the electron and target beam energies (GeV), that can be modified with  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh --electronP 10. --targetP 100.
+[eicenv] /EIC/utils/pythia6/mkpypar.sh --electronP 10. --targetP 100.
 ```
 
 There are other parameters that you can play with, like for instance setting the minimum and maximum photon virtuality (Q2)  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh --electronP 10. --targetP 100. --Q2min 10. --Q2max 12.
+[eicenv] /EIC/utils/pythia6/mkpypar.sh --electronP 10. --targetP 100. --Q2min 10. --Q2max 12.
 ```
 
 If you need some more help or a curious of what other parameters can be used with mkpypar, do no hesitate to run  
 ```
-[eicenv] $EIC_ROOT/utils/pythia6/mkpypar.sh --help
+[eicenv] /EIC/utils/pythia6/mkpypar.sh --help
 ```
 
 Notice on the other hand that not everything is likely to work as expected, so use it with common sense and cross-check that the physics is simulated as expected by Pythia6 with some short runs. Also, you might want to refer to the Pythia6 manual for more detailed information.
