@@ -105,6 +105,9 @@ main() {
 	    build_delphes
 	fi
     fi
+
+    # remove source code
+    rm -rf $EIC_SOURCE
 }
 
 ### HepMC ###
